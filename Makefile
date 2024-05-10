@@ -9,3 +9,6 @@ migrate: ## Run migrate
 
 test: ## Run tests
 	docker exec -it pag-bank-app php artisan test
+
+migrate-fresh: ## Run migrate
+	docker exec -it pag-bank-app php artisan migrate:fresh --seed
