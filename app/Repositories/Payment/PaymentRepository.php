@@ -18,7 +18,11 @@ class PaymentRepository implements IPaymentRepository
         return Payment::paginate(10);
     }
 
-    public function getOne(int $idPayment)
+    /**
+     * @param string $idPayment
+     * @return mixed
+     */
+    public function getOne(string $idPayment)
     {
         return Payment::find($idPayment);
     }

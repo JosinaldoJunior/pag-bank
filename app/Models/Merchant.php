@@ -12,8 +12,6 @@ class Merchant extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-//    protected $table = 'merchants';
-
     /**
      * The attributes that are mass assignable.
      *

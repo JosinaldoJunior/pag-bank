@@ -28,7 +28,7 @@ class PaymentService implements IPaymentService
      * @param int $idPayment
      * @return mixed
      */
-    public function getOnePayment(int $idPayment)
+    public function getOnePayment(string $idPayment)
     {
         return $this->paymentRepository->getOne($idPayment);
     }

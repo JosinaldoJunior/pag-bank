@@ -37,9 +37,10 @@ class PaymentController extends Controller
         dd('store payment not implemented');
     }
 
-    public function show(int $idPayment)
+    public function show(string $idPayment)
     {
         $payment = $this->IPaymentService->getOnePayment($idPayment);
+        if (!$payment) return response()->json([], 404);
         return new PaymentResource($payment);
     }
 }
