@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Merchant;
 use App\Models\Payment;
 use App\Models\User;
 use Database\Factories\PaymentFactory;
@@ -15,14 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
+        Merchant::factory(9)->create(['password' => 'secret']);
+        Merchant::factory()->create([
+            'name' => 'MerchantTest',
             'email' => 'teste@pagbank.com.br',
             'password' => 'secret',
+            'balance' => 499.99
         ]);
 
-        Payment::factory(10)->create();
+        Payment::factory(20)->create();
     }
 }

@@ -22,7 +22,7 @@ class PaymentFactory extends Factory
             'name_client' => fake()->name(),
             'cpf' => fake()->creditCardNumber(),
             'description' => fake()->text(20),
-            'amount' => fake()->randomFloat(2, 4),
+            'amount' => fake()->randomFloat(2, 4, 2000),
             'status' => $status[rand(0, 3)],
             'payment_method' => 'pix',
             'paid_at' => fake()->dateTime()

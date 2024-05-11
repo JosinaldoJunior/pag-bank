@@ -15,7 +15,8 @@ return [
 
     'defaults' => [
         'guard' => 'api',
-        'passwords' => 'users',
+//        'passwords' => 'users',
+        'passwords' => 'merchants',
     ],
 
     /*
@@ -42,7 +43,9 @@ return [
         ],
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+//            'provider' => 'users',
+            'provider' => 'merchants',
+//            'model' => \App\Models\Merchant::class
         ],
     ],
 
@@ -64,15 +67,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+//        'users' => [
+//            'driver' => 'eloquent',
+//            'model' => App\Models\User::class,
+//        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'merchants' => [
+             'driver' => 'eloquent',
+             'model' => \App\Models\Merchant::class
+         ],
     ],
 
     /*
