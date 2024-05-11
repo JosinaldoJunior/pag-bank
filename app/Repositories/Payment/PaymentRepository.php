@@ -26,4 +26,9 @@ class PaymentRepository implements IPaymentRepository
     {
         return Payment::find($idPayment);
     }
+
+    public function create(array $data)
+    {
+        return Payment::create($data);
+    }
 }

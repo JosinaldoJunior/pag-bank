@@ -21,6 +21,7 @@ class Merchant extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'balance'
     ];
 
     /**

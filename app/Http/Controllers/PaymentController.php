@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Services\Payment\IPaymentService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  *
@@ -27,16 +29,28 @@ class PaymentController extends Controller
         return PaymentResource::collection($payments);
     }
 
-
     /**
-     * @param Request $request
-     * @return void
+     * @param StorePaymentRequest $request
+     * @return PaymentResource|\Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request)
     {
-        dd('store payment not implemented');
+        try {
+            $payment = $this->IPaymentService->pay($request->all());
+            return new PaymentResource($payment);
+        } catch (\Exception $e) {
+            return response()
+                ->json(
+                    ['message' => 'error when making payment'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+        }
     }
 
+    /**
+     * @param string $idPayment
+     * @return PaymentResource|\Illuminate\Http\JsonResponse
+     */
     public function show(string $idPayment)
     {
         $payment = $this->IPaymentService->getOnePayment($idPayment);

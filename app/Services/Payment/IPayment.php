@@ -4,6 +4,6 @@ namespace App\Services\Payment;
 
 interface IPayment
 {
-    public function pagar();
-    public function calcularTaxa();
+    public function makePayment() : array;
+    public function calculateRate() : float;
 }

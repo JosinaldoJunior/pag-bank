@@ -5,8 +5,9 @@ namespace App\Services\Payment;
 class Payment
 {
 
-    public function efetivarPagamento(IPayment $IPaymentService)
+    public function makePay(IPayment $IPaymentService) : array
     {
-        $IPaymentService->pagar();
+        $IPaymentService->calculateRate();
+        return $IPaymentService->makePayment();
     }
 }
