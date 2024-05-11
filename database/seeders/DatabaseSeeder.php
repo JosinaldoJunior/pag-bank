@@ -5,9 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Merchant;
 use App\Models\Payment;
+use App\Models\PaymentMethod;
 use App\Models\User;
-use Database\Factories\PaymentFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $types = ['Pix', 'Bank Slip', 'Bank Transfer'];
+        $percentage = [1.5, 2, 4];
+        foreach ($types as $key => $type) {
+            PaymentMethod::factory()->create([
+                'name' => $type,
+                'slug' => Str::slug($type),
+                'discount_percentage' => $percentage[$key]
+            ]);
+        }
+
         Merchant::factory(9)->create(['password' => 'secret']);
         Merchant::factory()->create([
             'name' => 'MerchantTest',
