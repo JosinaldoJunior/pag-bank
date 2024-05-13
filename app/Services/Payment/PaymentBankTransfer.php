@@ -78,10 +78,9 @@ class PaymentBankTransfer implements IPayment
     {
         $rate = $this->calculateRate();
         $this->amount = $this->amount - $rate;
-
         $user = auth()->user();
         $this->paymentProvider->sendPayment($payment);
-        $paymentCreated = $this->paymentRepository->create($this->toArray());
+        $paymentCreated = $this->paymentRepository->create($this->toArray($user->id));
         $this->merchantService->updateMerchant($user->id, ['balance' => $user->balance + $paymentCreated->amount]);
 
         return $paymentCreated;
@@ -98,14 +97,15 @@ class PaymentBankTransfer implements IPayment
     /**
      * @return array
      */
-    private function toArray() : array
+    private function toArray(int $idMerchant) : array
     {
         return [
             'name_client' => $this->name_client,
             'cpf' => $this->cpf,
             'description' => $this->description,
             'amount' => $this->amount,
-            'payment_method' => PaymentMethod::BANK_TRANSFER
+            'payment_method' => PaymentMethod::BANK_TRANSFER->value,
+            'merchant_id' => $idMerchant
         ];
     }
 }

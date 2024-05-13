@@ -20,6 +20,8 @@ return new class extends Migration
             $table->enum('status', ['pending', 'paid', 'expired', 'failed']);
             $table->string('payment_method');
             $table->dateTime('paid_at');
+            $table->unsignedBigInteger('merchant_id');
+            $table->foreign('merchant_id')->references('id')->on('merchants');
             $table->timestamps();
         });
     }

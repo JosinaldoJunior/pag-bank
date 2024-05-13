@@ -51,4 +51,9 @@ class Merchant extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

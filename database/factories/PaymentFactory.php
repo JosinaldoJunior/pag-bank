@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Merchant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +28,8 @@ class PaymentFactory extends Factory
             'amount' => fake()->randomFloat(2, 4, 2000),
             'status' => $status[rand(0, 3)],
             'payment_method' => $payment_methods[rand(0, 2)],
-            'paid_at' => fake()->dateTime()
+            'paid_at' => fake()->dateTime(),
+            'merchant_id' => Merchant::all()->first->id
         ];
     }
 }

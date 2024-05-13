@@ -19,7 +19,8 @@ class Payment extends Model
         'cpf',
         'description',
         'amount',
-        'payment_method'
+        'payment_method',
+        'merchant_id'
     ];
 
     public static function booted()
@@ -28,5 +29,10 @@ class Payment extends Model
             $model->id = Str::uuid();
             $model->paid_at = Date::now();
         });
+    }
+
+    public function merchant(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Merchant::class, 'merchant_id', 'id');
     }
 }
