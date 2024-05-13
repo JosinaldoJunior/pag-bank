@@ -52,4 +52,5 @@ make test
 
 ## API documentation
 
-- **[Swagger](http://localhost:8005/api/swagger)**
+- **[Swagger](http://localhost:8005/api/documentation)**
+- **Collection - /PagBankAPI.postman_collection.json**
