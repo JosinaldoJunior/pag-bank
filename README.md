@@ -21,25 +21,36 @@ This project is an API for a payments system developed in PHP, using the Laravel
 - **[Swagger](https://swagger.io/docs/)**
 
 ## Running local application
-    
-1 - Execute command to initialize application containers:
+
+1 - First clone the project repository:
+```
+git clone https://github.com/JosinaldoJunior/pag-bank.git
+```
+`Afterwards, access the folder where the project was cloned`
+
+2 - Create `.env` file from `.env-example`:
+```
+cp .env .env-example
+```
+
+3 - Execute command to initialize application containers:
 ```
 make up
 ```
 
-2 - Run the command to install the application dependencies:
+4 - Run the command to install the application dependencies:
 ```
 make install
 ```
 
-3 - Run the command to create the application database:
+5 - Run the command to create the application database:
 ```
 make migrate
 ```
 
 After that, access http://localhost:8005.
 
-Obs.: If you need to clean the database, run the command below:
+`Obs.: If you need to clean the database, run the command below:`
 ```
 make migrate-fresh
 ```
