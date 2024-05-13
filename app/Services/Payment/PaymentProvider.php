@@ -5,17 +5,10 @@ namespace App\Services\Payment;
 use Illuminate\Support\Facades\Log;
 
 /**
- *
+ * @class PaymentProvider
  */
 class PaymentProvider
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * @return bool
      */
@@ -34,7 +27,7 @@ class PaymentProvider
      * @param $data
      * @return void
      */
-    public function sendPayment($data)
+    public function sendPayment($data): void
     {
         try {
             if (!$this->simulationPaymentSuccessOrFails()){

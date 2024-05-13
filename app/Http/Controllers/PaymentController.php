@@ -36,7 +36,7 @@ class PaymentController extends Controller
     public function store(StorePaymentRequest $request)
     {
         try {
-            $payment = $this->IPaymentService->pay($request->all());
+            $payment = $this->IPaymentService->handlePayment($request->all());
             return new PaymentResource($payment);
         } catch (\Exception $e) {
             return response()

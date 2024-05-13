@@ -4,60 +4,100 @@ namespace App\Services\Payment;
 
 use App\Enums\PaymentMethod;
 use App\Enums\RatePaymentMethod;
-use App\Events\PaymentPixProcessed;
-use App\Models\Payment as PaymentAlias;
-use App\Repositories\Payment\IPaymentRepository;
-use App\Services\Merchant\IMerchantService;
+use App\Factories\IPayment;
+use App\Factories\Payment;
+use App\Repositories\Payment\PaymentRepository;
 use App\Services\Merchant\MerchantService;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @class PaymentPix
  */
 class PaymentPix implements IPayment
 {
-
-    public function __construct(
-        protected string $name_client,
-        protected string $cpf,
-        protected string $description,
-        protected float $amount,
-        private IPaymentRepository $paymentRepository,
-        private PaymentProvider $paymentProvider,
-        private IMerchantService $merchantService,
-    ) { }
+    /**
+     * @var string
+     */
+    private string $name_client;
+    /**
+     * @var string
+     */
+    private string $cpf;
+    /**
+     * @var string
+     */
+    private string $description;
+    /**
+     * @var float
+     */
+    private float $amount;
+    /**
+     * @var MerchantService
+     */
+    private MerchantService $merchantService;
+    /**
+     * @var PaymentRepository
+     */
+    private PaymentRepository $paymentRepository;
+    /**
+     * @var PaymentProvider
+     */
+    private PaymentProvider $paymentProvider;
 
     /**
-     * @param array $data
-     * @return void
+     * @param string $name_client
+     * @param string $cpf
+     * @param string $description
+     * @param float $amount
+     * @param PaymentProvider $paymentProvider
+     * @param PaymentRepository $paymentRepository
+     * @param MerchantService $merchantService
      */
-    public function makePayment() : array
+    public function __construct(
+        string $name_client,
+        string $cpf, string
+        $description,
+        float $amount,
+        PaymentProvider $paymentProvider,
+        PaymentRepository $paymentRepository,
+        MerchantService $merchantService)
     {
-        try {
-            $rate = $this->calculateRate();
-            $this->amount = $this->amount - $rate;
-
-            $user = auth()->user();
-            $this->paymentProvider->sendPayment($this->toArray());
-            $payment = $this->paymentRepository->create($this->toArray());
-            $this->merchantService->updateMerchant($user->id, ['balance' => $user->balance + $payment->amount]);
-
-            return $payment->toArray();
-        } catch (\Exception $e) {
-            abort(response()->json(['message' => 'error when making payment'], 500));
-        }
-
+        $this->name_client = $name_client;
+        $this->cpf = $cpf;
+        $this->description = $description;
+        $this->amount = $amount;
+        $this->paymentProvider = $paymentProvider;
+        $this->paymentRepository = $paymentRepository;
+        $this->merchantService = $merchantService;
     }
 
     /**
-     * @param float $amount
-     * @return float
+     * @param Payment $payment
+     * @return mixed
      */
-    public function calculateRate() : float
+    public function pay(Payment $payment)
+    {
+        $rate = $this->calculateRate();
+        $this->amount = $this->amount - $rate;
+
+        $user = auth()->user();
+        $this->paymentProvider->sendPayment($payment);
+        $paymentCreated = $this->paymentRepository->create($this->toArray());
+        $this->merchantService->updateMerchant($user->id, ['balance' => $user->balance + $paymentCreated->amount]);
+
+        return $paymentCreated;
+    }
+
+    /**
+     * @return int|float
+     */
+    public function calculateRate() : int|float
     {
         return $this->amount / 100 * RatePaymentMethod::PIX;
     }
 
+    /**
+     * @return array
+     */
     private function toArray() : array
     {
         return [
