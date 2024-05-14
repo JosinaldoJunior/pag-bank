@@ -30,7 +30,7 @@ git clone https://github.com/JosinaldoJunior/pag-bank.git
 
 2 - Create `.env` file from `.env-example`:
 ```
-cp .env .env-example
+cp .env.example .env
 ```
 
 3 - Execute command to initialize application containers:
