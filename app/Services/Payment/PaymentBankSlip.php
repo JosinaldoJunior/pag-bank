@@ -79,8 +79,8 @@ class PaymentBankSlip implements IPayment
         $rate = $this->calculateRate();
         $this->amount = $this->amount - $rate;
         $user = auth()->user();
-        $this->paymentProvider->sendPayment($payment);
         $paymentCreated = $this->paymentRepository->create($this->toArray($user->id));
+        $this->paymentProvider->sendPayment($paymentCreated);
         $this->merchantService->updateMerchant($user->id, ['balance' => $user->balance + $paymentCreated->amount]);
 
         return $paymentCreated;

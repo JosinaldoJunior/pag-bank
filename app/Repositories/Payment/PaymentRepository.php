@@ -27,8 +27,23 @@ class PaymentRepository implements IPaymentRepository
         return Payment::find($idPayment);
     }
 
+    /**
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data)
     {
         return Payment::create($data);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function update(string $id, array $data)
+    {
+        $payment = $this->getOne($id);
+        $payment->fill($data);
+
+        return $payment->save();
     }
 }

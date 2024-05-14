@@ -49,19 +49,37 @@ class PaymentService implements IPaymentService
         switch ($dataPayment['payment_method']) {
             case PaymentMethod::PIX->value:
                 $payment = $this->makePayment(
-                    new PixPay($dataPayment['name_client'], $dataPayment['cpf'], $dataPayment['description'],$dataPayment['amount'], new PaymentProvider(), new PaymentRepository(), new MerchantService(new MerchantRepository()))
+                    new PixPay($dataPayment['name_client'],
+                        $dataPayment['cpf'],
+                        $dataPayment['description'],
+                        $dataPayment['amount'],
+                        new PaymentProvider(new PaymentRepository()),
+                        new PaymentRepository(),
+                        new MerchantService(new MerchantRepository()))
                 );
                 break;
 
             case PaymentMethod::BANK_SLIP->value:
                 $payment = $this->makePayment(
-                    new BankSlipPay($dataPayment['name_client'], $dataPayment['cpf'], $dataPayment['description'],$dataPayment['amount'], new PaymentProvider(), new PaymentRepository(), new MerchantService(new MerchantRepository()))
+                    new BankSlipPay($dataPayment['name_client'],
+                        $dataPayment['cpf'],
+                        $dataPayment['description'],
+                        $dataPayment['amount'],
+                        new PaymentProvider(new PaymentRepository()),
+                        new PaymentRepository(),
+                        new MerchantService(new MerchantRepository()))
                 );
                 break;
 
             case PaymentMethod::BANK_TRANSFER->value:
                 $payment = $this->makePayment(
-                    new BankTransferPay($dataPayment['name_client'], $dataPayment['cpf'], $dataPayment['description'],$dataPayment['amount'], new PaymentProvider(), new PaymentRepository(), new MerchantService(new MerchantRepository()))
+                    new BankTransferPay($dataPayment['name_client'],
+                        $dataPayment['cpf'],
+                        $dataPayment['description'],
+                        $dataPayment['amount'],
+                        new PaymentProvider(new PaymentRepository()),
+                        new PaymentRepository(),
+                        new MerchantService(new MerchantRepository()))
                 );
                 break;
 

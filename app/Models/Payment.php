@@ -20,7 +20,8 @@ class Payment extends Model
         'description',
         'amount',
         'payment_method',
-        'merchant_id'
+        'merchant_id',
+        'status'
     ];
 
     public static function booted()
